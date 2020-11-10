@@ -195,6 +195,11 @@
                     </div>
                 </div>
 
+
+
+                <!-- success messages -->
+
+                <!-- notes -->
                 <message>
                     <div th:if="${noteCreateSuccess}" class="alert alert-success col-lg-4 col-md-4 col-sm-4 container justify-content-center">
                         <p class="text-center">Note (<span th:text="${noteCreateSuccess}"></span>) was successfully added.</p>
@@ -210,6 +215,24 @@
                         <p class="text-center">Note (<span th:text="${noteDeleteSuccess}"></span>) was successfully deleted.</p>
                     </div>
                 </message>
+
+                <!-- credentials -->
+                <message>
+                    <div th:if="${credentialCreateSuccess}" class="alert alert-success col-lg-4 col-md-4 col-sm-4 container justify-content-center">
+                        <p class="text-center">Credential (<span th:text="${credentialCreateSuccess}"></span>) was successfully added.</p>
+                    </div>
+                </message>
+                <message>
+                    <div th:if="${credentialEditSuccess}" class="alert alert-success col-lg-4 col-md-4 col-sm-4 container justify-content-center">
+                        <p class="text-center">Credential (<span th:text="${credentialEditSuccess}"></span>) was successfully updated.</p>
+                    </div>
+                </message>
+                <message>
+                    <div th:if="${credentialDeleteSuccess}" class="alert alert-success col-lg-4 col-md-4 col-sm-4 container justify-content-center">
+                        <p class="text-center">Credential (<span th:text="${credentialDeleteSuccess}"></span>) was successfully deleted.</p>
+                    </div>
+                </message>
+
 
                 <!-- error message -->
                 <message>

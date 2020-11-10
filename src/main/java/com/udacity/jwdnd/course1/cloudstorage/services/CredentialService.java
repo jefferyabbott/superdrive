@@ -20,7 +20,7 @@ public class CredentialService {
         this.encryptionService = encryptionService;
     }
 
-    public void addCredential(CredentialForm credentialForm) {
+    public String addCredential(CredentialForm credentialForm) {
         Credential newCredential = new Credential();
         newCredential.setUrl(credentialForm.getUrl());
         newCredential.setUsername(credentialForm.getUsername());
@@ -38,10 +38,12 @@ public class CredentialService {
         // check whether id already exists (if so, credential was edited)
         if (credentialForm.getCredentialid() == null) {
             credentialMapper.addCredential(newCredential);
+            return "credentialAdded";
         }
         else {
             newCredential.setCredentialid(credentialForm.getCredentialid());
             credentialMapper.updateCredential(newCredential);
+            return "credentialUpdated";
         }
 
     }
@@ -56,11 +58,19 @@ public class CredentialService {
     }
 
 
+    public String getCredentialUrl(Integer credentialId, Integer userId) {
+        return credentialMapper.getCredentialUrl(credentialId, userId);
+    }
+
     public int numberOfCredentialsForUser(Integer userId) {
         return credentialMapper.numberOfCredentialsForUser(userId);
     }
 
     public void deleteCredential(Integer credentialid, Integer userId) {
         credentialMapper.deleteCredential(credentialid, userId);
+    }
+
+    public boolean isCredentialStillInDB(Integer credentialId, Integer userId) {
+        return credentialMapper.numberOfCredentialsForUserWithSpecificId(credentialId, userId) != 0 ? true : false;
     }
 }

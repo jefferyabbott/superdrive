@@ -34,9 +34,18 @@ public class CredentialController {
     public String postCredential(Authentication authentication, CredentialForm credentialForm, NoteForm noteForm, Model model) {
         Integer userId = userService.getUserId(authentication.getName());
         credentialForm.setUserId(userId);
-        this.credentialService.addCredential(credentialForm);
+        String credentialChangeType = this.credentialService.addCredential(credentialForm);
         model = this.webAttributesService.addAttributes(model, userId);
         model.addAttribute("target", "credentials");
+        if (credentialChangeType.equals("credentialAdded")) {
+            model.addAttribute("credentialCreateSuccess", credentialForm.getUrl());
+        }
+        else if (credentialChangeType.equals("credentialUpdated")) {
+            model.addAttribute("credentialEditSuccess", credentialForm.getUrl());
+        }
+        else {
+            model.addAttribute("errorMessage", "Credential failed to save.");
+        }
         return "home";
     }
 
@@ -44,10 +53,16 @@ public class CredentialController {
     @GetMapping("/deleteCredential/{credentialid}")
     public String deleteCredential(@PathVariable Integer credentialid, Authentication authentication, CredentialForm credentialForm, NoteForm noteForm, Model model) {
         Integer userId = userService.getUserId(authentication.getName());
-        // add userId to ensure that the delete target is owned by the authenticated user
+        String url = this.credentialService.getCredentialUrl(credentialid, userId);
         this.credentialService.deleteCredential(credentialid, userId);
         model = this.webAttributesService.addAttributes(model, userId);
         model.addAttribute("target", "credentials");
+        if (!this.credentialService.isCredentialStillInDB(credentialid, userId)) {
+            model.addAttribute("credentialDeleteSuccess", url);
+        }
+        else {
+            model.addAttribute("errorMessage", "Error: Credential (" + url + ") was not deleted.");
+        }
         return "home";
     }
 
