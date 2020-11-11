@@ -48,10 +48,10 @@ public class FileController /*implements HandlerExceptionResolver*/ {
         try {
             String filename = file.getOriginalFilename();
             if (filename.equals("")) {
-                model.addAttribute("target", "file_missing_error");
+                model.addAttribute("errorMessage", "Please select a file to upload.");
             }
             else if (fileService.checkForExistingFileName(userId, filename) != 0) {
-                model.addAttribute("target", "file_exists_error");
+                model.addAttribute("errorMessage", "A file named " + filename + " exists in SuperDrive.");
             }
             else {
                 File incomingFile = new File();
@@ -61,6 +61,7 @@ public class FileController /*implements HandlerExceptionResolver*/ {
                 incomingFile.setFileData(file.getBytes());
                 incomingFile.setUserId(userId);
                 fileService.addFile(incomingFile);
+                model.addAttribute("fileUploadSuccess", filename);
             }
         }
         catch (Exception e) {
@@ -79,6 +80,7 @@ public class FileController /*implements HandlerExceptionResolver*/ {
         // add userId to ensure that the delete target is owned by the authenticated user
         this.fileService.deleteFile(file, userId);
         model = this.webAttributesService.addAttributes(model, userId);
+        model.addAttribute("fileDeleteSuccess", file);
         return "home";
     }
 
@@ -92,17 +94,5 @@ public class FileController /*implements HandlerExceptionResolver*/ {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + requestedFile.getFileName() + "\"")
                 .body(new ByteArrayResource(requestedFile.getFileData()));
     }
-
-
-/*
-    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception)
-    {
-        if (exception instanceof MaxUploadSizeExceededException)
-        {
-            model.addAttribute("target", "file_too_big");
-        }
-        return new ModelAndView("home", null);
-    }
-*/
 
 }

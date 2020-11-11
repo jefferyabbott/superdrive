@@ -199,6 +199,20 @@
 
                 <!-- success messages -->
 
+
+                <!-- files -->
+                <message>
+                    <div th:if="${fileUploadSuccess}" class="alert alert-success col-lg-4 col-md-4 col-sm-4 container justify-content-center">
+                        <p class="text-center">File (<span th:text="${fileUploadSuccess}"></span>) was successfully uploaded.</p>
+                    </div>
+                </message>
+                <message>
+                    <div th:if="${fileDeleteSuccess}" class="alert alert-success col-lg-4 col-md-4 col-sm-4 container justify-content-center">
+                        <p class="text-center">File (<span th:text="${fileDeleteSuccess}"></span>) was successfully deleted.</p>
+                    </div>
+                </message>
+
+
                 <!-- notes -->
                 <message>
                     <div th:if="${noteCreateSuccess}" class="alert alert-success col-lg-4 col-md-4 col-sm-4 container justify-content-center">
@@ -284,17 +298,7 @@
                 else if (updatedTab == 'credentials') {
                     document.getElementById("nav-credentials-tab").click();
                 }
-                else if (updatedTab == 'file_exists_error') {
-                    alert("That file name exists already!");
-                }
-                else if (updatedTab == 'file_missing_error') {
-                    alert("Whoops! Please select a file to upload.");
-                }
-                else if (updatedTab == 'file_too_big') {
-                    alert("The file must be less than 10MB.")
-                }
             }
-
 
         </script>
     </body>
