@@ -152,6 +152,17 @@ public class HomePage {
         this.saveCredentialButton.click();
     }
 
+    public boolean editCredential(String newCredentialUrl) throws InterruptedException {
+        this.editCredentialButton.click();
+        Thread.sleep(500);
+        this.credUrlInput.clear();
+        this.credUrlInput.sendKeys(newCredentialUrl);
+        Thread.sleep(500);
+        this.saveCredentialButton.click();
+        Thread.sleep(500);
+        return this.findCredentialText(newCredentialUrl);
+    }
+
     public boolean findCredentialText(String url) {
         return this.credentialsTable.getText().contains(url);
     }

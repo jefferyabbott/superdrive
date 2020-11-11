@@ -151,10 +151,15 @@ class CloudStorageApplicationTests {
 
 		Thread.sleep(500);
 
+		// edit note and confirm that edit was successful
+		String newTestUrl = "www.oracle.com";
+		assertTrue(homePage.editCredential(newTestUrl));
+
+		Thread.sleep(500);
+
 		// delete credential
 		homePage.deleteCredential();
-
-		assertEquals(homePage.findCredentialText(testUrl), false);
+		assertEquals(homePage.findCredentialText(newTestUrl), false);
 	}
 
 }
