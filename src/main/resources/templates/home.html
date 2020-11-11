@@ -80,7 +80,7 @@
                                 <tbody>
                                     <tr th:each="note: ${notes}">
                                         <td>
-                                            <button type="button" class="btn btn-success" th:onclick="javascript:showNoteModal( [[${note.noteId}]],[[${note.noteTitle}]],[[${note.noteDescription}]] )">Edit</button>
+                                            <button type="button" class="btn btn-success" id="editNoteButton" th:onclick="javascript:showNoteModal( [[${note.noteId}]],[[${note.noteTitle}]],[[${note.noteDescription}]] )">Edit</button>
                                             <a th:href="@{/note/deleteNote/{id}(id=${note.noteId})}" id="deleteNoteButton" class="btn btn-danger">Delete</a>
                                         </td>
                                         <th th:text="${note.noteTitle}" scope="row">Example Note Title</th>
@@ -118,7 +118,7 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" id="cancelEditNoteButton" data-dismiss="modal">Close</button>
                                         <button type="button" class="btn btn-primary" id="saveNoteButton" onclick="$('#noteSubmit').click();">Save changes</button>
                                     </div>
                                 </div>

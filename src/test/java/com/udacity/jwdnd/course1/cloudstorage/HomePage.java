@@ -33,8 +33,14 @@ public class HomePage {
     @FindBy(css = "#note-description")
     private WebElement noteDescription;
 
+    @FindBy(css = "#editNoteButton")
+    private WebElement editNoteButton;
+
     @FindBy(css = "#saveNoteButton")
     private WebElement saveNoteButton;
+
+    @FindBy(css = "#cancelEditNoteButton")
+    private WebElement cancelEditNoteButton;
 
     @FindBy(css = "#nav-notes")
     private WebElement notesTable;
@@ -105,6 +111,23 @@ public class HomePage {
         this.saveNoteButton.click();
     }
 
+    public boolean editNote(String newNoteText) throws InterruptedException {
+        this.editNoteButton.click();
+        Thread.sleep(500);
+        this.noteDescription.clear();
+        this.noteDescription.sendKeys(newNoteText);
+        Thread.sleep(500);
+        this.saveNoteButton.click();
+        Thread.sleep(500);
+        this.editNoteButton.click();
+        Thread.sleep(500);
+        String modifiedText = this.noteDescription.getText();
+        this.cancelEditNoteButton.click();
+        Thread.sleep(500);
+        return modifiedText.equals(newNoteText);
+    }
+
+
     public boolean findNoteText(String title) {
         return this.notesTable.getText().contains(title);
     }
@@ -148,6 +171,8 @@ public class HomePage {
         this.cancelCredentialEditButton.click();
         return passwordVisible;
     }
+
+
 
     public void deleteCredential() {
         this.deleteCredentialButton.click();

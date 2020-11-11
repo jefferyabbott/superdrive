@@ -103,6 +103,16 @@ class CloudStorageApplicationTests {
 
 
 		Thread.sleep(500);
+
+		// edit note and confirm that edit was successful
+		String newNoteText = "This is a different text note.";
+		assertEquals(homePage.editNote(newNoteText), true);
+
+
+
+		Thread.sleep(500);
+
+
 		// delete note
 		homePage.deleteNote();
 
